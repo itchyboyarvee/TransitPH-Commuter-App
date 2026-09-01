@@ -1,0 +1,1 @@
+- [API codegen compatibility](api-codegen-compatibility.md) — keep Orval output aligned with the installed Zod runtime before building server consumers.

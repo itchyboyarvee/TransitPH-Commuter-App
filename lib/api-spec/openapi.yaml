@@ -10,6 +10,16 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: auth
+    description: Authentication and profile operations
+  - name: terminals
+    description: Jeepney terminal discovery
+  - name: routes
+    description: Jeepney routes and trip search
+  - name: saved
+    description: Saved commuter routes
+  - name: weather
+    description: Location weather
 paths:
   /healthz:
     get:
@@ -24,7 +34,348 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /auth/register:
+    post:
+      operationId: register
+      tags: [auth]
+      summary: Register a commuter account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterInput"
+      responses:
+        "201":
+          description: Registered account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          description: Invalid registration
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Log in a commuter account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginInput"
+      responses:
+        "200":
+          description: Logged in account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Invalid login
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /auth/logout:
+    post:
+      operationId: logout
+      tags: [auth]
+      summary: Log out the current session
+      responses:
+        "204":
+          description: Logged out
+  /auth/me:
+    get:
+      operationId: getCurrentUser
+      tags: [auth]
+      summary: Get the current session user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /terminals:
+    get:
+      operationId: listTerminals
+      tags: [terminals]
+      summary: List CALABARZON jeepney terminals
+      parameters:
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Province"
+      responses:
+        "200":
+          description: Terminal list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Terminal"
+    post:
+      operationId: createTerminal
+      tags: [terminals]
+      summary: Add a terminal (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TerminalInput"
+      responses:
+        "201":
+          description: Created terminal
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Terminal"
+        "401":
+          description: Not authenticated
+        "403":
+          description: Admin access required
+  /terminals/{id}:
+    get:
+      operationId: getTerminal
+      tags: [terminals]
+      summary: Get terminal details
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Terminal detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Terminal"
+        "404":
+          description: Terminal not found
+    put:
+      operationId: updateTerminal
+      tags: [terminals]
+      summary: Update a terminal (admin)
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TerminalInput"
+      responses:
+        "200":
+          description: Updated terminal
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Terminal"
+    delete:
+      operationId: deleteTerminal
+      tags: [terminals]
+      summary: Delete a terminal (admin)
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "204":
+          description: Deleted terminal
+  /routes:
+    get:
+      operationId: listRoutes
+      tags: [routes]
+      summary: List jeepney routes
+      parameters:
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Province"
+      responses:
+        "200":
+          description: Route list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Route"
+    post:
+      operationId: createRoute
+      tags: [routes]
+      summary: Add a route (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RouteInput"
+      responses:
+        "201":
+          description: Created route
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Route"
+  /routes/{id}:
+    get:
+      operationId: getRoute
+      tags: [routes]
+      summary: Get route details
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Route detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Route"
+        "404":
+          description: Route not found
+    put:
+      operationId: updateRoute
+      tags: [routes]
+      summary: Update a route (admin)
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RouteInput"
+      responses:
+        "200":
+          description: Updated route
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Route"
+    delete:
+      operationId: deleteRoute
+      tags: [routes]
+      summary: Delete a route (admin)
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "204":
+          description: Deleted route
+  /search:
+    get:
+      operationId: searchRoutes
+      tags: [routes]
+      summary: Find commuter routes between locations
+      parameters:
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SearchResult"
+        "400":
+          description: Empty search or limit reached
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /saved-routes:
+    get:
+      operationId: listSavedRoutes
+      tags: [saved]
+      summary: List saved routes
+      responses:
+        "200":
+          description: Saved routes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SavedRoute"
+    post:
+      operationId: saveRoute
+      tags: [saved]
+      summary: Save a route
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SavedRouteInput"
+      responses:
+        "201":
+          description: Saved route
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SavedRoute"
+  /saved-routes/{id}:
+    delete:
+      operationId: deleteSavedRoute
+      tags: [saved]
+      summary: Delete a saved route
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "204":
+          description: Deleted saved route
+  /weather:
+    get:
+      operationId: getWeather
+      tags: [weather]
+      summary: Get weather for a CALABARZON location
+      parameters:
+        - name: location
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Location weather
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Weather"
 components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: number
+    Search:
+      name: search
+      in: query
+      schema:
+        type: string
+    Province:
+      name: province
+      in: query
+      schema:
+        type: string
   schemas:
     HealthStatus:
       type: object
@@ -33,4 +384,127 @@ components:
           type: string
       required:
         - status
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required: [error]
+    User:
+      type: object
+      properties:
+        id: { type: number }
+        name: { type: string }
+        email: { type: string }
+        role: { type: string, enum: [USER, ADMIN] }
+      required: [id, name, email, role]
+    RegisterInput:
+      type: object
+      properties:
+        name: { type: string, minLength: 2 }
+        email: { type: string }
+        password: { type: string, minLength: 8 }
+        confirmPassword: { type: string, minLength: 8 }
+      required: [name, email, password, confirmPassword]
+    LoginInput:
+      type: object
+      properties:
+        email: { type: string }
+        password: { type: string, minLength: 1 }
+      required: [email, password]
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/User"
+        searchesRemaining:
+          type: number
+      required: [user, searchesRemaining]
+    TerminalInput:
+      type: object
+      properties:
+        name: { type: string, minLength: 2 }
+        city: { type: string, minLength: 2 }
+        province: { type: string, minLength: 2 }
+        latitude: { type: number }
+        longitude: { type: number }
+        description: { type: string }
+        operatingHours: { type: string }
+      required: [name, city, province, latitude, longitude, description, operatingHours]
+    Terminal:
+      allOf:
+        - $ref: "#/components/schemas/TerminalInput"
+        - type: object
+          properties:
+            id: { type: number }
+            routes:
+              type: array
+              items:
+                $ref: "#/components/schemas/Route"
+          required: [id, routes]
+    RouteInput:
+      type: object
+      properties:
+        terminalId: { type: number }
+        routeName: { type: string, minLength: 2 }
+        destination: { type: string, minLength: 2 }
+        fare: { type: number }
+        estimatedTravelTime: { type: string }
+        walkingDistance: { type: string }
+        transfers: { type: number }
+        description: { type: string }
+        stops:
+          type: array
+          items: { type: string }
+      required: [terminalId, routeName, destination, fare, estimatedTravelTime, walkingDistance, transfers, description, stops]
+    Route:
+      allOf:
+        - $ref: "#/components/schemas/RouteInput"
+        - type: object
+          properties:
+            id: { type: number }
+            terminalName: { type: string }
+            city: { type: string }
+            province: { type: string }
+          required: [id, terminalName, city, province]
+    SearchResult:
+      allOf:
+        - $ref: "#/components/schemas/Route"
+        - type: object
+          properties:
+            from: { type: string }
+            to: { type: string }
+            instructions:
+              type: array
+              items: { type: string }
+            score: { type: number }
+          required: [from, to, instructions, score]
+    SavedRouteInput:
+      type: object
+      properties:
+        routeId: { type: number }
+        from: { type: string }
+        to: { type: string }
+      required: [routeId, from, to]
+    SavedRoute:
+      allOf:
+        - $ref: "#/components/schemas/SavedRouteInput"
+        - type: object
+          properties:
+            id: { type: number }
+            createdAt: { type: string, format: date-time }
+            route:
+              $ref: "#/components/schemas/Route"
+          required: [id, createdAt, route]
+    Weather:
+      type: object
+      properties:
+        location: { type: string }
+        temperature: { type: number }
+        condition: { type: string }
+        chanceOfRain: { type: number }
+        rainfallStatus: { type: string }
+        warning: { type: string }
+        updatedAt: { type: string }
+      required: [location, temperature, condition, chanceOfRain, rainfallStatus, warning, updatedAt]
 

@@ -1,6 +1,6 @@
-# [Project name]
+# TransitPH
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+TransitPH helps commuters navigate jeepney terminals and routes across CALABARZON with practical trip details, weather context, and saved journeys.
 
 ## Run & Operate
 
@@ -9,7 +9,7 @@ _Replace the heading above with the project's name, and this line with one sente
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- Required env: `DATABASE_URL` — provisioned Postgres connection string
 
 ## Stack
 
@@ -22,23 +22,34 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/transitph/src/pages/transit-pages.tsx` — user-facing pages and flows
+- `artifacts/transitph/src/components/transit-ui.tsx` — app shell and reusable transit UI
+- `artifacts/transitph/src/index.css` — visual tokens and app styling
+- `artifacts/api-server/src/routes/` — auth, transit, search, saved-route, and weather endpoints
+- `artifacts/api-server/src/lib/seed.ts` — development demo data
+- `lib/api-spec/openapi.yaml` — source of truth for API contracts
+- `lib/db/src/schema/` — Drizzle database tables
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The frontend uses generated OpenAPI hooks so endpoint contracts stay synchronized with the API.
+- The app uses the provisioned Postgres database rather than a browser-only store so saved routes and admin CRUD persist.
+- Demo weather is implemented behind a service-shaped endpoint so a real weather provider can be substituted later.
+- Route search is deliberately relevance-ranked and transparent rather than pretending to be a live routing engine.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+The prototype supports account access, route search, terminal discovery and details, route details, weather lookup, saved routes, a five-search free limit, and admin-only terminal/route CRUD. Demo records cover Laguna, Cavite, Batangas, Rizal, and Quezon.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+No additional user preferences recorded.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Run `pnpm --filter @workspace/api-spec run codegen` after changing the OpenAPI spec.
+- Run `pnpm exec tsc --build --force` after schema changes when generated workspace declarations appear stale.
+- The API service owns `/api`; the web app is served at `/`.
 
 ## Pointers
 

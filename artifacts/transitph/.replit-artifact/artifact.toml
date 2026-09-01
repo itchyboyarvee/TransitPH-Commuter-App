@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "TransitPH"
+description = "A mobile-first CALABARZON commuter app that helps people find jeepney routes, explore terminals, check local weather, and save their regular journeys."
+version = "1.0.0"
+id = "artifacts/transitph"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21962
+
+[services.development]
+run = "pnpm --filter @workspace/transitph run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/transitph", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/transitph/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21962"
+BASE_PATH = "/"

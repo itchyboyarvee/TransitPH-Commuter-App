@@ -1,0 +1,811 @@
+# TransitPH – 30% Mobile Application Implementation
+
+Build a functional **mobile application prototype called TransitPH**, an integrated multi-modal transit navigation and commuter safety system focused specifically on **CALABARZON, Philippines**.
+
+The goal is to produce approximately **30% implementation of the proposed system**, with a working frontend, backend, database, authentication/access control, navigation, and at least one major functional module.
+
+Do NOT attempt to fully implement every feature in the proposal. Prioritize the core system structure and the most important working functionality.
+
+---
+
+## 1. APPLICATION PURPOSE
+
+TransitPH helps commuters plan trips around CALABARZON by combining:
+
+* Jeepney terminals
+* Jeepney routes
+* Bus routes
+* Walking directions
+* Destination information
+* Location-specific weather information
+
+The most important feature for this implementation is the **Jeepney Terminal Tracker and Route Finder**.
+
+When a user searches for a destination, the application should be able to show:
+
+1. The nearest/relevant jeepney terminal
+2. Routes available from that terminal
+3. The destination/areas covered by each route
+4. Basic fare information when available
+5. Walking instructions to the terminal
+
+The presentation identifies this terminal-and-route functionality as a central part of the proposed solution.
+
+---
+
+# 2. TECHNOLOGY
+
+Build this as a **mobile-first application** that can run through Replit.
+
+Use a practical technology stack that is easy to run and demonstrate in Replit.
+
+Preferred:
+
+* Frontend: React + Vite
+* Mobile UI: responsive mobile-first design / PWA
+* Backend: Node.js + Express
+* Database: SQLite
+* ORM/database library: Prisma or another reliable lightweight solution
+* Authentication: JWT or session-based authentication
+* Maps: use an appropriate map library/API if available
+* Weather: use a weather API if an API key is available
+
+If external APIs require credentials that are not available, create a clean service layer and provide realistic mock data so the application remains fully demonstrable.
+
+---
+
+# 3. REQUIRED 30% IMPLEMENTATION
+
+The implementation MUST contain the following:
+
+## A. Core System Structure
+
+Create a proper application structure:
+
+Frontend:
+
+* Login
+* Registration
+* Home/Dashboard
+* Route Finder
+* Terminal Details
+* Route Details
+* Weather
+* Profile
+
+Backend:
+
+* Authentication API
+* User API
+* Terminal API
+* Route API
+* Search API
+* Weather API/service
+
+Database:
+
+* Users
+* Jeepney Terminals
+* Jeepney Routes
+* Route Stops/Destinations
+* Saved Routes
+
+Organize the code into logical components, pages, services, controllers, and database models.
+
+---
+
+# 4. USER AUTHENTICATION
+
+Implement working user authentication.
+
+Users should be able to:
+
+### Register
+
+Fields:
+
+* Full Name
+* Email
+* Password
+* Confirm Password
+
+### Login
+
+Fields:
+
+* Email
+* Password
+
+After successful login, redirect the user to the Home screen.
+
+Implement:
+
+* Password validation
+* Duplicate email checking
+* Secure password hashing
+* Authentication/session handling
+* Logout
+
+Prevent unauthenticated users from accessing protected pages such as Saved Routes and Profile.
+
+---
+
+# 5. MAJOR FUNCTIONAL MODULE – ROUTE FINDER
+
+This is the PRIMARY module for the 30% implementation.
+
+Create a mobile-friendly **Route Finder**.
+
+The user should be able to enter:
+
+### From
+
+* Current location
+* Or manually select a starting location
+
+### To
+
+* Destination
+
+Example:
+
+From:
+"Calamba, Laguna"
+
+To:
+"Nuvali, Santa Rosa"
+
+When the user taps:
+
+**FIND ROUTE**
+
+the application should display available routes.
+
+Each result should show:
+
+* Starting location
+* Destination
+* Jeepney terminal
+* Jeepney route
+* Estimated travel time
+* Estimated fare
+* Number of transfers
+* Walking distance
+* Basic route instructions
+
+Example:
+
+CALAMBA → SANTA ROSA
+
+1. Walk to Calamba Jeepney Terminal
+2. Take Calamba–Santa Rosa Jeepney
+3. Get off at Santa Rosa Bayan
+4. Walk to destination
+
+---
+
+# 6. JEEPNEY TERMINAL TRACKER
+
+Create a dedicated Terminal Tracker module.
+
+Display a list/map of jeepney terminals within CALABARZON.
+
+Each terminal record should contain:
+
+* Terminal name
+* Municipality/City
+* Province
+* Latitude
+* Longitude
+* Routes
+* Destinations served
+* Estimated fare
+* Operating information when available
+
+Example database records can include terminals from:
+
+* Laguna
+* Cavite
+* Batangas
+* Rizal
+* Quezon
+
+Use realistic CALABARZON sample data.
+
+Clearly label sample/mock data where appropriate.
+
+---
+
+# 7. TERMINAL DETAILS PAGE
+
+When the user selects a terminal, open a Terminal Details screen.
+
+Display:
+
+**Terminal Name**
+
+**Location**
+
+**Province**
+
+**Routes**
+
+For every route display:
+
+* Route name
+* Destination
+* Fare
+* Estimated travel time
+
+Include buttons:
+
+* "View Route"
+* "Navigate to Terminal"
+* "Save Terminal"
+
+---
+
+# 8. CRUD OPERATIONS
+
+Implement actual database CRUD functionality where applicable.
+
+For terminals:
+
+### CREATE
+
+Admin can add a new terminal.
+
+### READ
+
+Users can view terminals and terminal details.
+
+### UPDATE
+
+Admin can edit terminal information.
+
+### DELETE
+
+Admin can delete a terminal.
+
+For routes:
+
+### CREATE
+
+Admin can add a route.
+
+### READ
+
+Users can view routes.
+
+### UPDATE
+
+Admin can edit route information.
+
+### DELETE
+
+Admin can delete routes.
+
+Do NOT create a complicated admin dashboard. A simple functional admin page is sufficient for the 30% implementation.
+
+---
+
+# 9. ACCESS CONTROL
+
+Create two user roles:
+
+### USER
+
+Can:
+
+* Search routes
+* View terminals
+* View routes
+* View weather
+* Save routes
+* View profile
+
+### ADMIN
+
+Can:
+
+* Do everything a normal user can do
+* Add terminals
+* Edit terminals
+* Delete terminals
+* Add routes
+* Edit routes
+* Delete routes
+
+Hide administrative functions from normal users.
+
+---
+
+# 10. NAVIGATION
+
+Implement working navigation between:
+
+Login
+↓
+Home
+↓
+Route Finder
+↓
+Route Results
+↓
+Terminal Details
+↓
+Route Details
+
+Also provide:
+
+Home
+→ Weather
+
+Home
+→ Saved Routes
+
+Home
+→ Profile
+
+Admin
+→ Terminal Management
+→ Route Management
+
+Use a mobile bottom navigation bar with:
+
+🏠 Home
+🗺️ Routes
+📍 Terminals
+☁️ Weather
+👤 Profile
+
+Make navigation functional rather than decorative.
+
+---
+
+# 11. WEATHER MODULE
+
+Create a basic weather feature based on the proposed TransitPH functionality.
+
+The user should be able to search/select a location and see:
+
+* Current temperature
+* Weather condition
+* Chance of rain
+* Rainfall status
+* Simple weather warning
+
+Example:
+
+Santa Rosa, Laguna
+
+28°C
+Partly Cloudy
+
+Rain Probability:
+65%
+
+⚠️ Rain may affect your walking route.
+
+If a real weather API cannot be used because no API key is available, create a mock weather service with realistic sample data.
+
+The presentation specifically identifies station/location-level weather checking as one of TransitPH's proposed features.
+
+---
+
+# 12. SAVED ROUTES
+
+Allow logged-in users to save a route.
+
+For example:
+
+"Calamba → Santa Rosa"
+
+The user can:
+
+* Save route
+* View saved routes
+* Delete saved route
+
+Store saved routes in the database and associate them with the logged-in user.
+
+---
+
+# 13. USER INTERFACE
+
+Design the application as a **modern Philippine commuter mobile application**.
+
+Prioritize:
+
+* Clean interface
+* Large touch-friendly buttons
+* Easy-to-read typography
+* Simple navigation
+* Mobile-first layout
+* Map-based visual elements
+* Clear route cards
+* Clear terminal cards
+* Minimal clutter
+
+The Home screen should contain:
+
+### TransitPH
+
+"Your smarter way to commute around CALABARZON."
+
+Search box:
+
+**Where do you want to go?**
+
+[ FROM ]
+
+[ TO ]
+
+[ FIND ROUTE ]
+
+Below that:
+
+### Nearby Terminals
+
+Show several terminal cards.
+
+### Weather
+
+Show current weather for the selected/current location.
+
+---
+
+# 14. DATABASE
+
+Create a real SQLite database.
+
+Suggested schema:
+
+### User
+
+* id
+* name
+* email
+* password
+* role
+* createdAt
+
+### Terminal
+
+* id
+* name
+* city
+* province
+* latitude
+* longitude
+* description
+* createdAt
+* updatedAt
+
+### Route
+
+* id
+* terminalId
+* routeName
+* destination
+* fare
+* estimatedTravelTime
+* description
+* createdAt
+* updatedAt
+
+### SavedRoute
+
+* id
+* userId
+* routeId
+* createdAt
+
+### RouteStop
+
+* id
+* routeId
+* stopName
+* latitude
+* longitude
+* sequence
+
+Create proper relationships between these tables.
+
+---
+
+# 15. API ENDPOINTS
+
+Create working backend endpoints such as:
+
+Authentication:
+
+POST /api/auth/register
+POST /api/auth/login
+POST /api/auth/logout
+
+Terminals:
+
+GET /api/terminals
+GET /api/terminals/:id
+POST /api/terminals
+PUT /api/terminals/:id
+DELETE /api/terminals/:id
+
+Routes:
+
+GET /api/routes
+GET /api/routes/:id
+POST /api/routes
+PUT /api/routes/:id
+DELETE /api/routes/:id
+
+Route Search:
+
+GET /api/search?from=&to=
+
+Saved Routes:
+
+GET /api/saved-routes
+POST /api/saved-routes
+DELETE /api/saved-routes/:id
+
+Weather:
+
+GET /api/weather?location=
+
+Protect admin endpoints using authentication and role checking.
+
+---
+
+# 16. ROUTE SEARCH LOGIC
+
+Implement a simple working route-matching algorithm.
+
+The system does NOT need a sophisticated AI routing engine for the 30% implementation.
+
+Search the database for routes where:
+
+* destination matches the user's destination
+* destination contains the search keyword
+* terminal/city is relevant to the starting location
+
+Rank results based on relevance.
+
+Return multiple possible routes when available.
+
+Example:
+
+User searches:
+
+FROM: Calamba
+TO: Santa Rosa
+
+Return:
+
+Route 1
+Calamba Terminal → Santa Rosa Bayan
+Fare: ₱30
+Estimated Time: 45 min
+
+Route 2
+Calamba Crossing → Balibago
+Fare: ₱35
+Estimated Time: 50 min
+
+---
+
+# 17. SAMPLE DATA
+
+Seed the database with realistic CALABARZON sample data.
+
+Include terminals and routes from different provinces:
+
+Laguna
+Cavite
+Batangas
+Rizal
+Quezon
+
+Include at least:
+
+* 15 terminals
+* 30 routes
+* Multiple destinations per province
+
+The data should demonstrate that the system works across CALABARZON rather than being limited to one city.
+
+Clearly identify sample/demo records if they have not been verified against an official source.
+
+---
+
+# 18. MAP
+
+Add a map interface to the Route Finder and Terminal Tracker.
+
+Show terminal markers.
+
+When a marker is selected, display:
+
+Terminal name
+City
+Province
+Available routes
+
+If an actual map API is unavailable, create a functional map placeholder with terminal markers and coordinates rather than leaving an empty screen.
+
+---
+
+# 19. FREE SEARCH LIMIT
+
+The proposed business model has a free-user limit of five route searches every 12 hours, while Premium provides unlimited searches.
+
+For this 30% prototype, implement the FREE limitation.
+
+Normal users:
+
+* Maximum 5 route searches
+* Reset after 12 hours
+
+Display:
+
+"5/5 searches remaining"
+
+After reaching the limit:
+
+"You have reached your free search limit. Upgrade to Premium for unlimited searches."
+
+Do NOT implement actual payment processing yet.
+
+You may create a non-functional "Upgrade to Premium" button.
+
+---
+
+# 20. ERROR HANDLING
+
+Implement proper error states.
+
+Examples:
+
+No route found:
+"No available route was found for this destination."
+
+Invalid login:
+"Incorrect email or password."
+
+Network/API failure:
+"Unable to retrieve information. Please try again."
+
+Empty search:
+"Please enter a destination."
+
+Database failure:
+"Something went wrong. Please try again."
+
+---
+
+# 21. DEMO REQUIREMENTS
+
+The application must be runnable directly from Replit.
+
+Make sure:
+
+* Database initializes automatically
+* Sample data is seeded automatically
+* Frontend starts correctly
+* Backend starts correctly
+* Authentication works
+* Login works
+* Route search works
+* Terminal details work
+* CRUD operations work
+* Navigation works
+* Saved routes work
+* Weather screen works
+* Admin access control works
+
+Create demo accounts:
+
+ADMIN:
+Email: [admin@transitph.test](mailto:admin@transitph.test)
+Password: Admin123!
+
+USER:
+Email: [user@transitph.test](mailto:user@transitph.test)
+Password: User123!
+
+Clearly indicate that these are development/demo accounts.
+
+---
+
+# 22. RESPONSIVE MOBILE DESIGN
+
+The primary target is a smartphone.
+
+Design for approximately:
+
+* 375px width
+* 390px width
+* 412px width
+
+Do not create a desktop-only website.
+
+The application should feel like a real mobile transportation app.
+
+Use cards, bottom navigation, map previews, route timelines, and large buttons.
+
+---
+
+# 23. IMPLEMENTATION PRIORITY
+
+Prioritize functionality in this exact order:
+
+1. Authentication
+2. Home screen
+3. Route Finder
+4. Jeepney Terminal Tracker
+5. Terminal Details
+6. Route Details
+7. Database CRUD
+8. Navigation
+9. Saved Routes
+10. Weather
+11. Free search limit
+12. Admin access control
+
+Do NOT spend excessive time on advanced features such as:
+
+* Payment processing
+* Advanced traffic prediction
+* AI route optimization
+* Real-time GPS tracking
+* Complex premium subscriptions
+* Push notifications
+
+These can remain future features.
+
+---
+
+# 24. CODE QUALITY
+
+Use:
+
+* Reusable React components
+* Clear folder structure
+* Environment variables for API keys
+* Proper API error handling
+* Input validation
+* Secure password hashing
+* Authentication middleware
+* Role-based authorization
+* Database relationships
+* Comments explaining important logic
+
+Do not put the entire application into one file.
+
+---
+
+# 25. FINAL REQUIREMENT
+
+After implementation, provide a concise README containing:
+
+1. Project overview
+2. Technology stack
+3. How to run the application
+4. Database setup
+5. Demo accounts
+6. API endpoints
+7. Implemented features
+8. Features intentionally left for future development
+
+The final application should clearly demonstrate the following seven requirements for the 30% implementation:
+
+✓ Core system structure
+✓ User authentication/access control
+✓ At least one major functional module
+✓ CRUD operations
+✓ Navigation between related modules
+✓ Appropriate mobile user interface
+✓ Frontend + backend + database integration
+
+Build the application now and make sure the main features are actually functional rather than merely visual mockups.
