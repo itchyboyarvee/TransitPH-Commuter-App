@@ -419,7 +419,8 @@ components:
           $ref: "#/components/schemas/User"
         searchesRemaining:
           type: number
-      required: [user, searchesRemaining]
+        sessionToken: { type: string }
+      required: [user, searchesRemaining, sessionToken]
     TerminalInput:
       type: object
       properties:

@@ -42,7 +42,8 @@ export const RegisterResponse = zod.object({
   "email": zod.string(),
   "role": zod.enum(['USER', 'ADMIN'])
 }),
-  "searchesRemaining": zod.number()
+  "searchesRemaining": zod.number(),
+  "sessionToken": zod.string()
 })
 
 
@@ -64,7 +65,8 @@ export const LoginResponse = zod.object({
   "email": zod.string(),
   "role": zod.enum(['USER', 'ADMIN'])
 }),
-  "searchesRemaining": zod.number()
+  "searchesRemaining": zod.number(),
+  "sessionToken": zod.string()
 })
 
 

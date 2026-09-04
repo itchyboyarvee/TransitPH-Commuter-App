@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <TextView style="@style/TransitEyebrow" android:text="Terminal tracker" />
+        <TextView style="@style/TransitPageTitle" android:text="Know where the ride begins." />
+        <TextView style="@style/TransitBody" android:layout_marginTop="9dp" android:text="A living directory of jeepney terminals across the region." />
+        <EditText android:id="@+id/terminals_filter" style="@style/TransitInput" android:layout_marginTop="18dp" android:hint="Search terminal, city, or province" />
+        <LinearLayout android:id="@+id/terminals_map" android:layout_width="match_parent" android:layout_height="130dp" android:layout_marginTop="16dp" android:padding="16dp" android:gravity="bottom" android:background="@drawable/bg_sage_panel">
+            <TextView android:id="@+id/terminals_map_label" style="@style/TransitInfoTitle" android:text="CALABARZON marker view&#10;Loading terminals..." />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/terminals_list" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:orientation="vertical" />
+    </LinearLayout>
+</ScrollView>

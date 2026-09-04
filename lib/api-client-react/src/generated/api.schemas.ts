@@ -47,6 +47,7 @@ export interface LoginInput {
 export interface AuthResponse {
   user: User;
   searchesRemaining: number;
+  sessionToken: string;
 }
 
 export interface TerminalInput {

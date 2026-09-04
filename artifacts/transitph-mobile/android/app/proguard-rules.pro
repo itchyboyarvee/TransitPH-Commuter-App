@@ -1,0 +1,1 @@
+# TransitPH uses the standard Android Studio debug build.

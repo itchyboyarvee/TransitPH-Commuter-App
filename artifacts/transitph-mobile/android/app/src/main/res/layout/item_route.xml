@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:padding="16dp"
+    android:orientation="vertical"
+    android:background="@drawable/bg_card">
+    <TextView android:id="@+id/item_route_name" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/brand_teal" android:textSize="10sp" android:textStyle="bold" />
+    <TextView android:id="@+id/item_route_destination" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textColor="@color/brand_deep" android:textSize="16sp" android:textStyle="bold" />
+    <TextView android:id="@+id/item_route_terminal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="3dp" android:textColor="@color/brand_muted" android:textSize="12sp" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="13dp" android:orientation="horizontal">
+        <TextView android:id="@+id/item_route_fare" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/brand_deep" android:textSize="12sp" />
+        <TextView android:id="@+id/item_route_time" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/brand_deep" android:textSize="12sp" />
+        <TextView android:id="@+id/item_route_walk" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/brand_deep" android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>

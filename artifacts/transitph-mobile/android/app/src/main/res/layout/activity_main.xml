@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_screen">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/logo_mark"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:text="TP"
+            android:textColor="@color/brand_deep"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_gold_button" />
+
+        <TextView
+            android:id="@+id/logo_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="9dp"
+            android:text="TransitPH"
+            android:textColor="@color/brand_deep"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/profile_button"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:text="●"
+            android:textColor="@color/brand_deep"
+            android:textSize="18sp"
+            android:background="@drawable/bg_sage_panel"
+            android:clickable="true"
+            android:focusable="true" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/content_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="8dp"
+        android:padding="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_bottom_nav">
+
+        <TextView
+            android:id="@+id/nav_home"
+            style="@style/TransitNavItem"
+            android:text="⌂&#10;Home" />
+        <TextView
+            android:id="@+id/nav_routes"
+            style="@style/TransitNavItem"
+            android:text="⌁&#10;Routes" />
+        <TextView
+            android:id="@+id/nav_terminals"
+            style="@style/TransitNavItem"
+            android:text="⌖&#10;Terminals" />
+        <TextView
+            android:id="@+id/nav_saved"
+            style="@style/TransitNavItem"
+            android:text="♡&#10;Saved" />
+    </LinearLayout>
+</LinearLayout>

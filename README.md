@@ -2,6 +2,8 @@
 
 TransitPH is a mobile-first commuter app prototype for CALABARZON, Philippines. It helps riders find jeepney routes, compare fares and walking distances, explore terminals, check demo weather, and save regular trips.
 
+The project includes both the responsive web app and a native Expo mobile app. The web app remains at the root preview, while the native app is available as the `TransitPH Mobile` artifact.
+
 ## Technology stack
 
 - React + Vite + Tailwind CSS
@@ -18,6 +20,26 @@ The Replit workflows start both services automatically:
 pnpm --filter @workspace/api-server run dev
 pnpm --filter @workspace/transitph run dev
 ```
+
+To run the native app through Expo:
+
+```bash
+pnpm --filter @workspace/transitph-mobile run dev
+```
+
+Use the mobile workflow's QR code with Expo Go, or open the TransitPH Mobile artifact preview in Replit. The native client reuses the API server and stores its session token for authenticated requests.
+
+### Android Studio Java/XML version
+
+The same product also includes a conventional Android Studio project at `artifacts/transitph-mobile/android`. It uses Java for application logic and XML for layouts; it does not use Kotlin.
+
+Open the `android` directory directly in Android Studio, start an emulator, and run the `app` configuration. To connect it to the API, add the API origin to `android/gradle.properties`:
+
+```properties
+TRANSITPH_API_BASE_URL=https://your-development-domain.example
+```
+
+The Android version includes the TransitPH home dashboard, route finder, terminal directory, saved-route sign-in state, and shared CALABARZON brand styling. If the API URL is not configured, it still opens with clearly labeled demo weather and local preview data so the XML UI can be inspected in the emulator.
 
 For a full check:
 
@@ -74,6 +96,7 @@ Admin mutations require the signed-in admin session.
 - Search limit enforcement with a visible user-facing error
 - Location weather lookup using a realistic mock weather service
 - Responsive bottom navigation and desktop navigation
+- Native Expo app with tab navigation and device-friendly authentication
 
 ## Future work
 

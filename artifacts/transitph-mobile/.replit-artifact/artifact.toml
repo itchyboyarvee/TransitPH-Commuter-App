@@ -1,0 +1,24 @@
+kind = "mobile"
+previewPath = "/transitph-mobile/"
+title = "TransitPH Mobile"
+description = "A native commuter companion for CALABARZON that helps riders find jeepney routes, explore terminals, check local weather, and save regular trips."
+version = "1.0.0"
+id = "artifacts/transitph-mobile"
+router = "expo-domain"
+
+[[services]]
+name = "expo"
+ensurePreviewReachable = "/status"
+paths = [ "/transitph-mobile/" ]
+localPort = 20340
+
+[services.development]
+run = "pnpm --filter @workspace/transitph-mobile run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/transitph-mobile", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/transitph-mobile", "run", "serve" ]
+
+[services.env]
+PORT = "20340"
+BASE_PATH = "/transitph-mobile/"

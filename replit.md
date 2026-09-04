@@ -25,6 +25,10 @@ TransitPH helps commuters navigate jeepney terminals and routes across CALABARZO
 - `artifacts/transitph/src/pages/transit-pages.tsx` — user-facing pages and flows
 - `artifacts/transitph/src/components/transit-ui.tsx` — app shell and reusable transit UI
 - `artifacts/transitph/src/index.css` — visual tokens and app styling
+- `artifacts/transitph-mobile/app/` — Expo Router screens for the native client
+- `artifacts/transitph-mobile/components/transit-native.tsx` — native UI primitives and cards
+- `artifacts/transitph-mobile/context/auth.tsx` — native session state and token persistence
+- `artifacts/transitph-mobile/android/` — Android Studio Java/XML client with standard Gradle structure
 - `artifacts/api-server/src/routes/` — auth, transit, search, saved-route, and weather endpoints
 - `artifacts/api-server/src/lib/seed.ts` — development demo data
 - `lib/api-spec/openapi.yaml` — source of truth for API contracts
@@ -34,6 +38,8 @@ TransitPH helps commuters navigate jeepney terminals and routes across CALABARZO
 
 - The frontend uses generated OpenAPI hooks so endpoint contracts stay synchronized with the API.
 - The app uses the provisioned Postgres database rather than a browser-only store so saved routes and admin CRUD persist.
+- The API accepts both browser session cookies and bearer session tokens so the web and Expo clients can share the same account system.
+- The Android Studio client uses Java/XML and the same bearer-token API; its API origin is supplied through `TRANSITPH_API_BASE_URL` in Gradle properties.
 - Demo weather is implemented behind a service-shaped endpoint so a real weather provider can be substituted later.
 - Route search is deliberately relevance-ranked and transparent rather than pretending to be a live routing engine.
 

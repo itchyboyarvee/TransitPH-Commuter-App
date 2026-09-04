@@ -29,8 +29,8 @@ router.post("/auth/register", async (req, res): Promise<void> => {
     passwordHash: hashPassword(password),
     role: "USER",
   }).returning();
-  startSession(user.id, res);
-  res.status(201).json({ user: publicUser(user), searchesRemaining: 5 });
+  const sessionToken = startSession(user.id, res);
+  res.status(201).json({ user: publicUser(user), searchesRemaining: 5, sessionToken });
 });
 
 router.post("/auth/login", async (req, res): Promise<void> => {
@@ -44,8 +44,8 @@ router.post("/auth/login", async (req, res): Promise<void> => {
     res.status(401).json({ error: "Incorrect email or password." });
     return;
   }
-  startSession(user.id, res);
-  res.json({ user: publicUser(user), searchesRemaining: searchesRemaining(user) });
+  const sessionToken = startSession(user.id, res);
+  res.json({ user: publicUser(user), searchesRemaining: searchesRemaining(user), sessionToken });
 });
 
 router.post("/auth/logout", (req, res): void => {

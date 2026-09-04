@@ -21,6 +21,10 @@ export function verifyPassword(password: string, stored: string): boolean {
 }
 
 function getSessionId(req: Request): string | undefined {
+  const authorization = req.headers.authorization;
+  if (authorization?.startsWith("Bearer ")) {
+    return authorization.slice("Bearer ".length).trim() || undefined;
+  }
   const cookie = req.headers.cookie
     ?.split(";")
     .map((item) => item.trim())
@@ -36,7 +40,7 @@ export async function getUser(req: Request): Promise<User | undefined> {
   return user;
 }
 
-export function startSession(userId: number, res: Response): void {
+export function startSession(userId: number, res: Response): string {
   const sessionId = createHash("sha256")
     .update(`${userId}:${randomBytes(24).toString("hex")}`)
     .digest("hex");
@@ -45,6 +49,7 @@ export function startSession(userId: number, res: Response): void {
     "Set-Cookie",
     `${SESSION_COOKIE}=${sessionId}; HttpOnly; SameSite=Lax; Path=/; Max-Age=604800`,
   );
+  return sessionId;
 }
 
 export function endSession(req: Request, res: Response): void {
